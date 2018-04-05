@@ -1,14 +1,15 @@
 {
-  "name": "pubgapi",
+  "name": "chumacera",
   "version": "1.0.0",
-  "description": "",
-  "main": "./dist/pubgapi/clinet.js",
+  "description": "PUBGAPI wrapper for nodejs",
+  "main": "./dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc",
     "build": "tsc"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "lm9",
+  "license": "MIT",
   "dependencies": {
     "@types/fs-extra": "^5.0.1",
     "@types/qs": "^6.5.1",

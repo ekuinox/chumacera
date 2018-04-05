@@ -1,4 +1,4 @@
-import { Client } from "../pubgapi/client";
+import { Client } from "../app";
 import fs from "fs-extra";
 
 const APIKEY = JSON.parse(fs.readFileSync("./conf/key.json", "utf8"))["APIKEY"];
