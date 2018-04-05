@@ -1,5 +1,5 @@
 # Chumacera
-
+[![Build Status](https://travis-ci.org/lm9/chumacera.svg?branch=master)](https://travis-ci.org/lm9/chumacera)
 PUBG Dev API wrapper for nodejs.
 
 ## Install
