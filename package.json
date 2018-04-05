@@ -1,6 +1,6 @@
 {
   "name": "chumacera",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "PUBGAPI wrapper for nodejs",
   "main": "./dist/app.js",
   "scripts": {
