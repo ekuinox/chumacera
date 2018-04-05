@@ -1,0 +1,85 @@
+{
+    "data": {
+        "type": "player",
+        "id": "account.0992f709b65e4ad294663022efe57958",
+        "attributes": {
+            "createdAt": "2018-03-31T12:57:05Z",
+            "name": "lm0x",
+            "patchVersion": "",
+            "shardId": "pc-jp",
+            "stats": null,
+            "titleId": "bluehole-pubg",
+            "updatedAt": "2018-04-03T16:04:37Z"
+        },
+        "relationships": {
+            "assets": {
+                "data": []
+            },
+            "matches": {
+                "data": [{
+                    "type": "match",
+                    "id": "52ac10e4-b0b7-497d-83c1-5e41bcd1efb6"
+                }, {
+                    "type": "match",
+                    "id": "4f2f3a71-9348-4e67-b940-d4d4cf530545"
+                }, {
+                    "type": "match",
+                    "id": "7bf60815-717a-4cc6-a67f-bb2876187ef9"
+                }, {
+                    "type": "match",
+                    "id": "ca6e957c-ee7d-4601-a104-07d1e362c101"
+                }, {
+                    "type": "match",
+                    "id": "f9ff3e27-15e1-4e95-b9ad-4eabefa8affe"
+                }, {
+                    "type": "match",
+                    "id": "63a83d59-d8c4-4214-8fca-3138a41abd74"
+                }, {
+                    "type": "match",
+                    "id": "856e7fbb-8641-4b33-9268-b320b2f5bdf7"
+                }, {
+                    "type": "match",
+                    "id": "acafaf59-4d5e-426a-8d50-b081f65b8942"
+                }, {
+                    "type": "match",
+                    "id": "5b2e8cb3-ca19-480b-badf-292a9795744a"
+                }, {
+                    "type": "match",
+                    "id": "1e0d9b2b-41be-4119-a33a-07791ee08d4b"
+                }, {
+                    "type": "match",
+                    "id": "31ada985-ddf4-44d6-b0f7-ee299e1cc68a"
+                }, {
+                    "type": "match",
+                    "id": "d0e43179-9e76-451e-8971-3161ad258235"
+                }, {
+                    "type": "match",
+                    "id": "c4bd5460-89c4-4515-9e03-c1e20ea3a326"
+                }, {
+                    "type": "match",
+                    "id": "919ba049-c516-42e4-8ee1-e951318612cf"
+                }, {
+                    "type": "match",
+                    "id": "fac60be5-abcc-4a75-995c-ed929f1bb54c"
+                }, {
+                    "type": "match",
+                    "id": "856b3c6f-a198-4c6e-ad87-90d5eb583617"
+                }, {
+                    "type": "match",
+                    "id": "f2bd0c40-56c4-4660-9328-82c799e9428e"
+                }, {
+                    "type": "match",
+                    "id": "930f0bd8-dac7-401c-9bb1-5fa4bcd03d59"
+                }]
+            }
+        },
+        "links": {
+            "schema": "",
+            "self": "https://api.playbattlegrounds.com/shards/pc-jp/players/account.0992f709b65e4ad294663022efe57958"
+        }
+    },
+    "links": {
+        "self": "https://api.playbattlegrounds.com/shards/pc-jp/players/account.0992f709b65e4ad294663022efe57958"
+    },
+    "meta": {}
+}

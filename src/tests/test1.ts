@@ -6,8 +6,13 @@ const APIKEY = JSON.parse(fs.readFileSync("./conf/key.json", "utf8"))["APIKEY"];
 const client = new Client(APIKEY);
 
 (async () => {
-    client.get("shards/pc-jp/matches/52ac10e4-b0b7-497d-83c1-5e41bcd1efb6", {}, true)
-    .then(r => {
-        fs.writeFileSync("./samples/matches{id}", r);
+    client.getPlayer("account.0992f709b65e4ad294663022efe57958", "pc-jp")
+    .then(player => {
+        player.relationships.matches.forEach(async match => {
+            client.getMatch(match.id, "pc-jp")
+            .then(m => {
+                fs.writeFileSync(`./samples/match_${m.id}.json`, JSON.stringify(m));
+            }).catch(e => console.log(e));
+        });
     }).catch(e => console.log(e));
 })();

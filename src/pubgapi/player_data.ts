@@ -24,7 +24,10 @@ namespace PUBGAPI {
             if (data.type !== this.type) throw new Error("Data isn't Player's");
             this.id = data.id;
             this.attributes = data.attributes;
-            this.relationships = data.relationships;
+            this.relationships = {
+                assets: data.relationships.assets.data,
+                matches: data.relationships.matches.data
+            };
             this.links = data.links;
             this.links = data.links;
         }

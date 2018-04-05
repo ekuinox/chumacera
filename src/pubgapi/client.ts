@@ -31,9 +31,14 @@ namespace PUBGAPI {
                             if (raw) {
                                 resolve(body);
                             } else {
-                                const parsed_result = JSON.parse(body);
-                                if (parsed_result.errors) reject(parsed_result.errors);
-                                else resolve(parsed_result);
+                                try {
+                                    const parsed_result = JSON.parse(body);
+                                    if (parsed_result.errors) reject(parsed_result.errors);
+                                    else resolve(parsed_result);
+                                } catch (e) {
+                                    reject(e);
+                                }
+                                
                             }
                         }
                     }
