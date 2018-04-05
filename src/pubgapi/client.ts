@@ -80,9 +80,9 @@ namespace PUBGAPI {
 		}
 
 		// マッチを1件引っ張ってくる
-		public getMatch(id: string, region: string): Promise<MatchData>;
-		public getMatch(id: string, region: string, raw: boolean): Promise<any>
-		public getMatch(id: string, region: string, raw?: boolean) {
+		public getMatch(region: string, id: string): Promise<MatchData>;
+		public getMatch(region: string,id: string, raw: boolean): Promise<any>
+		public getMatch(region: string, id: string, raw?: boolean) {
 			return new Promise<MatchData | any>((resolve, reject) => {
 				this.get(`shards/${region}/matches/${id}`)
 				.then(result => {
