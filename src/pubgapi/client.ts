@@ -11,7 +11,7 @@ namespace PUBGAPI {
 			this.api_key = api_key;
 		}
 
-		public get(api: string, params?: any) {
+		public get(api: string, params?: any, raw?: boolean) {
 			return new Promise<any>((resolve, reject) => {
 				let url = `${this.base_url}/${api}`;
 				if (params) url += `?${qs.stringify(params)}`;
@@ -24,7 +24,7 @@ namespace PUBGAPI {
 						}
 					},
 				).then(res => {
-					resolve(res.data);
+					resolve(raw ? JSON.stringify(res.data) : res.data);
 				}).catch(e => {
 					if (e.response.data.errors) reject(e.response.data.errors);
 					else reject(e.statusText);
