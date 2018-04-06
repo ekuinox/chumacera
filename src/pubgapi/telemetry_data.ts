@@ -1,5 +1,5 @@
 namespace PUBGAPI {
-    export class Telemetry {
+    export class TelemetryData {
         data: any;
         
         constructor(data: any) {

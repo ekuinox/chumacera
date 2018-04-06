@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Telemetry } from "./telemetry";
+import { TelemetryData } from "./telemetry_data";
 
 namespace PUBGAPI {
     export class Asset {
@@ -24,7 +24,7 @@ namespace PUBGAPI {
         }
 
         public getTelemetry() {
-            return new Promise<Telemetry>((resolve, reject) => {
+            return new Promise<TelemetryData>((resolve, reject) => {
                 axios.get(
                     this.attributes.URL,
                     {
@@ -33,7 +33,7 @@ namespace PUBGAPI {
 						}
 					},
                 ).then(res => {
-                    resolve(new Telemetry(res.data));
+                    resolve(new TelemetryData(res.data));
                 }).catch(e => reject(e));
             });
         }
