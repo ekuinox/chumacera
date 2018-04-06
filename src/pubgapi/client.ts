@@ -2,6 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import { PlayerData } from "./player_data";
 import { MatchData } from "./match_data";
+import { Telemetry } from "./telemetry";
 
 namespace PUBGAPI {
 	export class Client{
@@ -11,19 +12,13 @@ namespace PUBGAPI {
 			this.api_key = api_key;
 		}
 
-		public get(api: string, params?: any, raw?: boolean) {
+		public get(url: string, params?: any, raw?: boolean) {
+			const headers: any = { "Accept": "application/vnd.api+json" };
+			if (url.match(/api\.playbattlegrounds\.com/)) headers["Authorization"] = this.api_key;
 			return new Promise<any>((resolve, reject) => {
-				let url = `${this.base_url}/${api}`;
 				if (params) url += `?${qs.stringify(params)}`;
-				axios.get(
-					url,
-					{
-						headers: {
-							"Authorization": this.api_key,
-							"Accept": "application/vnd.api+json"
-						}
-					},
-				).then(res => {
+				axios.get(url, { headers: headers})
+				.then(res => {
 					resolve(raw ? JSON.stringify(res.data) : res.data);
 				}).catch(e => {
 					if (e.response.data.errors) reject(e.response.data.errors);
@@ -37,7 +32,7 @@ namespace PUBGAPI {
 		public getPlayer(id: string, region: string, raw: boolean): Promise<any>
 		public getPlayer(id: string, region: string, raw?: boolean) {
 			return new Promise<PlayerData>((resolve, reject) => {
-				this.get(`shards/${region}/players/${id}`)
+				this.get(`${this.base_url}/shards/${region}/players/${id}`)
 				.then(result => {
 					try {
 						if (raw) resolve(result);
@@ -57,7 +52,7 @@ namespace PUBGAPI {
 				const params: {[key: string]: string} = {};
 				if (filter.names) params["filter[playerNames]"] = filter.names.join(",");
 				if (filter.ids) params["filter[playerIds]"] = filter.ids.join(",");
-				this.get(`shards/${region}/players/`, params)
+				this.get(`${this.base_url}/shards/${region}/players/`, params)
 				.then((result) => {
 					if (raw) {
 						resolve(result);
@@ -84,11 +79,25 @@ namespace PUBGAPI {
 		public getMatch(region: string,id: string, raw: boolean): Promise<any>
 		public getMatch(region: string, id: string, raw?: boolean) {
 			return new Promise<MatchData | any>((resolve, reject) => {
-				this.get(`shards/${region}/matches/${id}`)
+				this.get(`${this.base_url}/shards/${region}/matches/${id}`)
 				.then(result => {
 					try {
 						if (raw) resolve(result);
 						else resolve(new MatchData(result.data, result.included));
+					} catch (e) {
+						reject(e);
+					}
+				}).catch(error => reject(error));
+			});
+		}
+
+		// Telemetry from url
+		public getTelemetry(url: string) {
+			return new Promise<MatchData | any>((resolve, reject) => {
+				this.get(url)
+				.then(result => {
+					try {
+						resolve(new Telemetry(result));
 					} catch (e) {
 						reject(e);
 					}
