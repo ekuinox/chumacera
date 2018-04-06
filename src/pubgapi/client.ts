@@ -2,7 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import { PlayerData } from "./player_data";
 import { MatchData } from "./match_data";
-import { Telemetry } from "./telemetry";
+import { TelemetryData } from "./telemetry_data";
 
 namespace PUBGAPI {
 	export class Client{
@@ -97,7 +97,7 @@ namespace PUBGAPI {
 				this.get(url)
 				.then(result => {
 					try {
-						resolve(new Telemetry(result));
+						resolve(new TelemetryData(result));
 					} catch (e) {
 						reject(e);
 					}
