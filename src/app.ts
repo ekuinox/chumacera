@@ -3,3 +3,5 @@ export { MatchData } from "./pubgapi/match_data";
 export { Participant } from "./pubgapi/participant";
 export { PlayerData } from "./pubgapi/player_data";
 export { Roster } from "./pubgapi/roster";
+export { Telemetry } from "./pubgapi/telemetry";
+export { Asset } from "./pubgapi/asset";
