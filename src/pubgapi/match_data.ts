@@ -1,5 +1,6 @@
 import { Participant } from "./participant";
 import { Roster } from "./roster";
+import { Asset } from "./asset";
 
 namespace PUBGAPI {
     export class MatchData {
@@ -28,6 +29,7 @@ namespace PUBGAPI {
 
         readonly participants: Participant[] = [];
         readonly rosters: Roster[] = [];
+        readonly assets: Asset[] = [];
 
         constructor(data: any, included: any[]) {
             if (data.type !== this.type) throw new Error("Data isn't Match's");
@@ -61,7 +63,8 @@ namespace PUBGAPI {
             this.links = data.links;
             included.forEach((v: any) => {
                 if (v.type === "roster") this.rosters.push(new Roster(v));
-                if (v.type === "participant") this.participants.push(new Participant(v));
+                else if (v.type === "participant") this.participants.push(new Participant(v));
+                else if (v.type === "asset") this.assets.push(new Asset(v));
             })
         }
     }
