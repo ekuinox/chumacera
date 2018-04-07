@@ -296,7 +296,7 @@ namespace TelemetryEvents {
 
 		constructor(data: any) {
 			super(data);
-			this.item_package = new ItemPackage(data["itemPackage"]);
+			this.item_package = new ItemPackage(data["itemPackage"] ? data["itemPackage"] : data);
 		}
 	}
 

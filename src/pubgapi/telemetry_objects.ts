@@ -20,6 +20,7 @@ namespace TelemetryObjects {
         readonly items: Item[] = [];
 
         constructor(data: any) {
+            console.log(data);
             this.id = data["itemPackageId"];
             this.location = new Location(data["location"]);
             data["items"].forEach((item: any) => {
