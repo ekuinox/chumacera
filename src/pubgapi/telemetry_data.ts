@@ -1,91 +1,165 @@
-import TelemetryEvents from "./telemetry_events";
+import {
+	Basic,
+    LogPlayerLogin,
+    LogPlayerCreate,
+    LogPlayerPosition,
+    LogPlayerAttack,
+    LogItemPickup,
+    LogItemEquip,
+    LogItemUnequip,
+    LogVehicleRide,
+    LogMatchDefinition,
+    LogMatchStart,
+    LogGameStatePeriodic,
+    LogVehicleLeave,
+    LogPlayerTakeDamage,
+    LogPlayerLogout,
+    LogItemAttach,
+    LogItemDrop,
+    LogPlayerKill,
+    LogItemDetach,
+    LogItemUse,
+    LogCarePackageSpawn,
+    LogVehicleDestroy,
+    LogCarePackageLand,
+    LogMatchEnd
+} from "./telemetry_events";
 
 namespace PUBGAPI {
 	export class TelemetryData {
-		events: TelemetryEvents.Basic[] = [];
+		events: {
+			PlayerLogin: LogPlayerLogin[];
+			PlayerCreate: LogPlayerCreate[];
+			PlayerPosition: LogPlayerPosition[];
+			PlayerAttack: LogPlayerAttack[];
+			ItemPickup: LogItemPickup[];
+			ItemEquip: LogItemEquip[];
+			ItemUnequip: LogItemUnequip[];
+			VehicleRide: LogVehicleRide[];
+			MatchDefinition: LogMatchDefinition[];
+			MatchStart: LogMatchStart[];
+			GameStatePeriodic: LogGameStatePeriodic[];
+			VehicleLeave: LogVehicleLeave[];
+			PlayerTakeDamage: LogPlayerTakeDamage[];
+			PlayerLogout: LogPlayerLogout[];
+			ItemAttach: LogItemAttach[];
+			ItemDrop: LogItemDrop[];
+			PlayerKill: LogPlayerKill[];
+			ItemDetach: LogItemDetach[];
+			ItemUse: LogItemUse[];
+			CarePackageSpawn: LogCarePackageSpawn[];
+			VehicleDestroy: LogVehicleDestroy[];
+			CarePackageLand: LogCarePackageLand[];
+			MatchEnd: LogMatchEnd[];
+			AnyEvent: Basic[];
+		} = {
+			PlayerLogin: [],
+			PlayerCreate: [],
+			PlayerPosition: [],
+			PlayerAttack: [],
+			ItemPickup: [],
+			ItemEquip: [],
+			ItemUnequip: [],
+			VehicleRide: [],
+			MatchDefinition: [],
+			MatchStart: [],
+			GameStatePeriodic: [],
+			VehicleLeave: [],
+			PlayerTakeDamage: [],
+			PlayerLogout: [],
+			ItemAttach: [],
+			ItemDrop: [],
+			PlayerKill: [],
+			ItemDetach: [],
+			ItemUse: [],
+			CarePackageSpawn: [],
+			VehicleDestroy: [],
+			CarePackageLand: [],
+			MatchEnd: [],
+			AnyEvent: []
+		};
 
 		constructor(data: any) {
-			data.forEach((event: any) => {
-				if (!event["_T"]) return;
-				switch (event["_T"]) {
+			if (!(data instanceof Array)) {
+				console.log("api.pubg.report?");
+				return;
+			}
+			data.forEach((_event: any) => {
+				if (!_event["_T"]) return;
+				
+				switch (_event["_T"]) {
 					case "LogPlayerLogin":
-						this.events.push(new TelemetryEvents.LogPlayerLogin(event));
+						this.events.PlayerLogin.push(new LogPlayerLogin(_event));
 						break;
 					case "LogPlayerCreate":
-						this.events.push(new TelemetryEvents.LogPlayerCreate(event));
+						this.events.PlayerCreate.push(new LogPlayerCreate(_event));
 						break;
 					case "LogPlayerPosition":
-						this.events.push(new TelemetryEvents.LogPlayerPosition(event));
+						this.events.PlayerPosition.push(new LogPlayerPosition(_event));
 						break;
 					case "LogPlayerAttack":
-						this.events.push(new TelemetryEvents.LogPlayerAttack(event));
+						this.events.PlayerAttack.push(new LogPlayerAttack(_event));
 						break;
 					case "LogItemPickup":
-						this.events.push(new TelemetryEvents.LogItemPickup(event));
+						this.events.ItemPickup.push(new LogItemPickup(_event));
 						break;
 					case "LogItemEquip":
-						this.events.push(new TelemetryEvents.LogItemEquip(event));
+						this.events.ItemEquip.push(new LogItemEquip(_event));
 						break;
 					case "LogVehicleRide":
-						this.events.push(new TelemetryEvents.LogVehicleRide(event));
+						this.events.VehicleRide.push(new LogVehicleRide(_event));
 						break;
 					case "LogMatchDefinition":
-						this.events.push(new TelemetryEvents.LogMatchDefinition(event));
+						this.events.MatchDefinition.push(new LogMatchDefinition(_event));
 						break;
 					case "LogMatchStart":
-						this.events.push(new TelemetryEvents.LogMatchStart(event));
+						this.events.MatchStart.push(new LogMatchStart(_event));
 						break;
 					case "LogGameStatePeriodic":
-						this.events.push(new TelemetryEvents.LogGameStatePeriodic(event));
+						this.events.GameStatePeriodic.push(new LogGameStatePeriodic(_event));
 						break;
 					case "LogVehicleLeave":
-						this.events.push(new TelemetryEvents.LogVehicleLeave(event));
+						this.events.VehicleLeave.push(new LogVehicleLeave(_event));
 						break;
 					case "LogPlayerTakeDamage":
-						this.events.push(new TelemetryEvents.LogPlayerTakeDamage(event));
+						this.events.PlayerTakeDamage.push(new LogPlayerTakeDamage(_event));
 						break;
 					case "LogPlayerLogout":
-						this.events.push(new TelemetryEvents.LogPlayerLogout(event));
-						break;
-					case "LogPlayerPosition":
-						this.events.push(new TelemetryEvents.LogPlayerPosition(event));
+						this.events.PlayerLogout.push(new LogPlayerLogout(_event));
 						break;
 					case "LogItemAttach":
-						this.events.push(new TelemetryEvents.LogItemAttach(event));
+						this.events.ItemAttach.push(new LogItemAttach(_event));
 						break;
 					case "LogItemDrop":
-						this.events.push(new TelemetryEvents.LogItemDrop(event));
+						this.events.ItemDrop.push(new LogItemDrop(_event));
 						break;
 					case "LogItemUnequip":
-						this.events.push(new TelemetryEvents.LogItemUnequip(event));
-						break;
-					case "LogVehicleRide":
-						this.events.push(new TelemetryEvents.LogVehicleRide(event));
+						this.events.ItemUnequip.push(new LogItemUnequip(_event));
 						break;
 					case "LogPlayerKill":
-						this.events.push(new TelemetryEvents.LogPlayerKill(event));
+						this.events.PlayerKill.push(new LogPlayerKill(_event));
 						break;
 					case "LogItemDetach":
-						this.events.push(new TelemetryEvents.LogItemDetach(event));
+						this.events.ItemDetach.push(new LogItemDetach(_event));
 						break;
 					case "LogItemUse":
-						this.events.push(new TelemetryEvents.LogItemUse(event));
+						this.events.ItemUse.push(new LogItemUse(_event));
 						break;
 					case "LogCarePackageSpawn":
-						this.events.push(new TelemetryEvents.LogCarePackageSpawn(event));
+						this.events.CarePackageSpawn.push(new LogCarePackageSpawn(_event));
 						break;
 					case "LogVehicleDestroy":
-						this.events.push(new TelemetryEvents.LogVehicleDestroy(event));
+						this.events.VehicleDestroy.push(new LogVehicleDestroy(_event));
 						break;
 					case "LogCarePackageLand":
-						this.events.push(new TelemetryEvents.LogCarePackageLand(event));
+						this.events.CarePackageLand.push(new LogCarePackageLand(_event));
 						break;
 					case "LogMatchEnd":
-						this.events.push(new TelemetryEvents.LogMatchEnd(event));
+						this.events.MatchEnd.push(new LogMatchEnd(_event));
 						break;
 					default:
 						// 漏れを探すために
-						this.events.push(new TelemetryEvents.Basic(event));
+						this.events.AnyEvent.push(new Basic(_event));
 						break;
 				}
 			});
