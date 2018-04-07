@@ -78,7 +78,7 @@ namespace PUBGAPI {
 		public getMatch(region: string, id: string): Promise<MatchData>;
 		public getMatch(region: string,id: string, raw: boolean): Promise<any>
 		public getMatch(region: string, id: string, raw?: boolean) {
-			return new Promise<MatchData | any>((resolve, reject) => {
+			return new Promise<MatchData>((resolve, reject) => {
 				this.get(`${this.base_url}/shards/${region}/matches/${id}`)
 				.then(result => {
 					try {
@@ -93,7 +93,7 @@ namespace PUBGAPI {
 
 		// Telemetry from url
 		public getTelemetry(url: string) {
-			return new Promise<MatchData | any>((resolve, reject) => {
+			return new Promise<TelemetryData>((resolve, reject) => {
 				this.get(url)
 				.then(result => {
 					try {
