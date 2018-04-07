@@ -1,3 +1,5 @@
+import { Participant } from "./participant"
+
 namespace PUBGAPI {
 	export class Roster {
 		readonly type: string = "roster";
@@ -5,12 +7,13 @@ namespace PUBGAPI {
 		readonly attributes?: {
 			shardId: string;
 			stats: any;
-			won: boolean; // TODO : TO boolean
+			won: boolean;
 		};
 		readonly relationships?: {
-			participants: any; // めんどい
+			participants: Participant[];
 			team: any
-		}
+		};
+		
 		constructor(data: any) {
 			if (data.type !== this.type) throw new Error("Data isn't Roster's");
 			this.id = data.id;
@@ -23,9 +26,18 @@ namespace PUBGAPI {
 			}
 			if (data.relationships) {
 				this.relationships = {
-					participants: data.relationships.participants,
+					participants: (() => {
+						const participants: Participant[] = [];
+						if (data.relationships.participants.data) {
+							data.relationships.participants.data.forEach((p: any) => {
+								participants.push(new Participant(p));
+							});
+						}
+						return participants;
+					})(),
 					team: data.relationships.team
 				};
+				
 			}
 		}
 	}
