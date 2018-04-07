@@ -15,7 +15,7 @@ namespace TelemetryEvents {
 	export class Basic {
 		readonly version: number; // _V
 		readonly date: string; // _D
-		readonly type: string; // T
+		readonly type?: string; // T
 		readonly common?: Common;
 
 		constructor(data: any) {
