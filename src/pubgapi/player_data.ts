@@ -13,7 +13,7 @@ namespace PUBGAPI {
         };
         readonly relationships: {
             assets: any[];
-            matches: any[];
+            matches: {type: string, id: string}[];
         };
         readonly links: {
             shema?: string;
@@ -26,7 +26,16 @@ namespace PUBGAPI {
             this.attributes = data.attributes;
             this.relationships = {
                 assets: data.relationships.assets.data,
-                matches: data.relationships.matches.data
+                matches: (() => {
+                    const matches: {type: string, id: string}[] = [];
+                    data.relationships.matches.data.forEach((match: any) => {
+                        matches.push({
+                            id: match.id,
+                            type: match.type
+                        });
+                    });
+                    return matches;
+                })()
             };
             this.links = data.links;
             this.links = data.links;
