@@ -80,89 +80,110 @@ namespace PUBGAPI {
 		};
 
 		constructor(data: any) {
-			if (!(data instanceof Array)) {
-				console.log("api.pubg.report?");
-				return;
+			if (data instanceof Array) { // TODO: 判定文改善したい
+				this.setup(data);
+			} else {
+				this.setup_from_filtered(data);
 			}
+		}
+
+		private setup(data: any) {
 			data.forEach((_event: any) => {
 				if (!_event["_T"]) return;
-				
-				switch (_event["_T"]) {
-					case "LogPlayerLogin":
-						this.events.PlayerLogin.push(new LogPlayerLogin(_event));
-						break;
-					case "LogPlayerCreate":
-						this.events.PlayerCreate.push(new LogPlayerCreate(_event));
-						break;
-					case "LogPlayerPosition":
-						this.events.PlayerPosition.push(new LogPlayerPosition(_event));
-						break;
-					case "LogPlayerAttack":
-						this.events.PlayerAttack.push(new LogPlayerAttack(_event));
-						break;
-					case "LogItemPickup":
-						this.events.ItemPickup.push(new LogItemPickup(_event));
-						break;
-					case "LogItemEquip":
-						this.events.ItemEquip.push(new LogItemEquip(_event));
-						break;
-					case "LogVehicleRide":
-						this.events.VehicleRide.push(new LogVehicleRide(_event));
-						break;
-					case "LogMatchDefinition":
-						this.events.MatchDefinition.push(new LogMatchDefinition(_event));
-						break;
-					case "LogMatchStart":
-						this.events.MatchStart.push(new LogMatchStart(_event));
-						break;
-					case "LogGameStatePeriodic":
-						this.events.GameStatePeriodic.push(new LogGameStatePeriodic(_event));
-						break;
-					case "LogVehicleLeave":
-						this.events.VehicleLeave.push(new LogVehicleLeave(_event));
-						break;
-					case "LogPlayerTakeDamage":
-						this.events.PlayerTakeDamage.push(new LogPlayerTakeDamage(_event));
-						break;
-					case "LogPlayerLogout":
-						this.events.PlayerLogout.push(new LogPlayerLogout(_event));
-						break;
-					case "LogItemAttach":
-						this.events.ItemAttach.push(new LogItemAttach(_event));
-						break;
-					case "LogItemDrop":
-						this.events.ItemDrop.push(new LogItemDrop(_event));
-						break;
-					case "LogItemUnequip":
-						this.events.ItemUnequip.push(new LogItemUnequip(_event));
-						break;
-					case "LogPlayerKill":
-						this.events.PlayerKill.push(new LogPlayerKill(_event));
-						break;
-					case "LogItemDetach":
-						this.events.ItemDetach.push(new LogItemDetach(_event));
-						break;
-					case "LogItemUse":
-						this.events.ItemUse.push(new LogItemUse(_event));
-						break;
-					case "LogCarePackageSpawn":
-						this.events.CarePackageSpawn.push(new LogCarePackageSpawn(_event));
-						break;
-					case "LogVehicleDestroy":
-						this.events.VehicleDestroy.push(new LogVehicleDestroy(_event));
-						break;
-					case "LogCarePackageLand":
-						this.events.CarePackageLand.push(new LogCarePackageLand(_event));
-						break;
-					case "LogMatchEnd":
-						this.events.MatchEnd.push(new LogMatchEnd(_event));
-						break;
-					default:
-						// 漏れを探すために
-						this.events.AnyEvent.push(new Basic(_event));
-						break;
+				this.push(_event);
+			});
+		}
+
+		private setup_from_filtered(data: any) {
+			["filtered", "global"].forEach(key => {
+				if (data[key]) {
+					for(const event_name in data[key]) {
+						console.log(event_name);
+						data[key][event_name].forEach((event: any) => {
+							this.push(event, event_name);
+						});
+					}
 				}
 			});
+		}
+
+		private push(event: any, event_name?: string) {
+			if (!event_name) event_name = event["_T"];
+			switch (event_name) {
+				case "LogPlayerLogin":
+					this.events.PlayerLogin.push(new LogPlayerLogin(event));
+					break;
+				case "LogPlayerCreate":
+					this.events.PlayerCreate.push(new LogPlayerCreate(event));
+					break;
+				case "LogPlayerPosition":
+					this.events.PlayerPosition.push(new LogPlayerPosition(event));
+					break;
+				case "LogPlayerAttack":
+					this.events.PlayerAttack.push(new LogPlayerAttack(event));
+					break;
+				case "LogItemPickup":
+					this.events.ItemPickup.push(new LogItemPickup(event));
+					break;
+				case "LogItemEquip":
+					this.events.ItemEquip.push(new LogItemEquip(event));
+					break;
+				case "LogVehicleRide":
+					this.events.VehicleRide.push(new LogVehicleRide(event));
+					break;
+				case "LogMatchDefinition":
+					this.events.MatchDefinition.push(new LogMatchDefinition(event));
+					break;
+				case "LogMatchStart":
+					this.events.MatchStart.push(new LogMatchStart(event));
+					break;
+				case "LogGameStatePeriodic":
+					this.events.GameStatePeriodic.push(new LogGameStatePeriodic(event));
+					break;
+				case "LogVehicleLeave":
+					this.events.VehicleLeave.push(new LogVehicleLeave(event));
+					break;
+				case "LogPlayerTakeDamage":
+					this.events.PlayerTakeDamage.push(new LogPlayerTakeDamage(event));
+					break;
+				case "LogPlayerLogout":
+					this.events.PlayerLogout.push(new LogPlayerLogout(event));
+					break;
+				case "LogItemAttach":
+					this.events.ItemAttach.push(new LogItemAttach(event));
+					break;
+				case "LogItemDrop":
+					this.events.ItemDrop.push(new LogItemDrop(event));
+					break;
+				case "LogItemUnequip":
+					this.events.ItemUnequip.push(new LogItemUnequip(event));
+					break;
+				case "LogPlayerKill":
+					this.events.PlayerKill.push(new LogPlayerKill(event));
+					break;
+				case "LogItemDetach":
+					this.events.ItemDetach.push(new LogItemDetach(event));
+					break;
+				case "LogItemUse":
+					this.events.ItemUse.push(new LogItemUse(event));
+					break;
+				case "LogCarePackageSpawn":
+					this.events.CarePackageSpawn.push(new LogCarePackageSpawn(event));
+					break;
+				case "LogVehicleDestroy":
+					this.events.VehicleDestroy.push(new LogVehicleDestroy(event));
+					break;
+				case "LogCarePackageLand":
+					this.events.CarePackageLand.push(new LogCarePackageLand(event));
+					break;
+				case "LogMatchEnd":
+					this.events.MatchEnd.push(new LogMatchEnd(event));
+					break;
+				default:
+					// 漏れを探すために
+					this.events.AnyEvent.push(new Basic(event));
+					break;
+			}
 		}
 	}
 }

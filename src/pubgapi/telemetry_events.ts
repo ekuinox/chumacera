@@ -148,7 +148,7 @@ namespace TelemetryEvents {
 		readonly state: GameState;
 		constructor(data: any) {
 			super(data);
-			this.state = new GameState(data["gameState"]);
+			this.state = new GameState(data["gameState"] ? data["gameState"] : data);
 		}
 	}
 
