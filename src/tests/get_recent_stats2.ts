@@ -5,11 +5,13 @@ const APIKEY = JSON.parse(fs.readFileSync("./conf/key.json", "utf8"))["APIKEY"];
 
 const client = new Client(APIKEY);
 
-const username = "lm0x";
+const username = process.argv[2] ? process.argv[2] : "lm0x";
+
+const shard = process.argv[3] ? process.argv[3] : Shard.PC_JP;
 
 // マッチ参加者としての情報を抜き出すサンプル
 (async () => {
-	client.getPlayers(Shard.PC_JP, {names: [username]})
+	client.getPlayers(shard, {names: [username]})
 	.then(res => {
 		for (const m of res[0].relationships.matches) {
 			m.getMatch()
