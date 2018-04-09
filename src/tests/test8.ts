@@ -10,7 +10,9 @@ const client = new Client(APIKEY);
     .then(res => {
         res[0].relationships.matches[0].getMatch()
         .then(match => {
-            console.log(match.rosters[0].relationships);
+            match.rosters.forEach(roster => {
+                console.log(roster.attributes);
+            });
         })
     })
     .catch(e => console.log(e));

@@ -1,12 +1,21 @@
 import { Participant } from "./participant"
 
 namespace PUBGAPI {
+	export class RosterStats {
+		readonly rank: number;
+		readonly team_id: number;
+		
+		constructor(data: any) {
+			this.rank = data.rank;
+			this.team_id = data.teamId;
+		}
+	}
 	export class Roster {
 		readonly type: string = "roster";
 		readonly id: string;
 		readonly attributes?: {
 			shard_id: string;
-			stats: any;
+			stats: RosterStats;
 			won: boolean;
 		};
 		readonly relationships?: {
@@ -20,7 +29,7 @@ namespace PUBGAPI {
 			if (data.attributes) {
 				this.attributes = {
 					shard_id: data.attributes.shardId,
-					stats: data.attributes.stats,
+					stats: new RosterStats(data.attributes.stats),
 					won: data.attributes.won === "true" ? true : false
 				};
 			}
