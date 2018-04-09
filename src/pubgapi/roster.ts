@@ -13,12 +13,12 @@ namespace PUBGAPI {
 	export class Roster {
 		readonly type: string = "roster";
 		readonly id: string;
-		readonly attributes?: {
+		readonly attributes: {
 			shard_id: string;
 			stats: RosterStats;
 			won: boolean;
 		};
-		readonly relationships?: {
+		readonly relationships: {
 			participants: {type: string, id: string}[];
 			team: any
 		};
@@ -31,6 +31,12 @@ namespace PUBGAPI {
 					shard_id: data.attributes.shardId,
 					stats: new RosterStats(data.attributes.stats),
 					won: data.attributes.won === "true" ? true : false
+				};
+			} else {
+				this.attributes = {
+					shard_id: "",
+					stats: new RosterStats({}),
+					won: false
 				};
 			}
 			if (data.relationships) {
@@ -46,7 +52,11 @@ namespace PUBGAPI {
 					})(),
 					team: data.relationships.team
 				};
-				
+			} else {
+				this.relationships = {
+					participants: [],
+					team: null
+				};
 			}
 		}
 	}

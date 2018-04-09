@@ -11,18 +11,23 @@ const username = "lm0x";
 (async () => {
 	client.getPlayers(Shard.PC_JP, {names: [username]})
 	.then(res => {
-		res[0].relationships.matches[0].getMatch()
-		.then(match => {
-			const stats = get_stats_from_match(match);
-
-			if (!stats) return;
-
-			console.log(`
+		for (const m of res[0].relationships.matches) {
+			m.getMatch()
+			.then(match => {
+				const stats = get_stats_from_match(match);
+	
+				if (!stats) return;
+	
+				console.log(`
+match: {completion: ${match.attributes.created_at}, shard: ${match.attributes.shard_id}, mode: ${match.attributes.game_mode}, id: ${match.id}}
 name: ${stats.participant.name}
 kills: ${stats.participant.kills}
 rank: ${stats.roster.rank}
-			`);
-		});
+walked: ${stats.participant.walk_distance}
+rode: ${stats.participant.ride_distance}
+				`);
+			});
+		}
 	})
 	.catch(e => console.log(e));
 })();
@@ -53,7 +58,7 @@ function get_stats_from_match(match: MatchData) {
 
 	const roster = search_roster_by_participant(match.rosters, participant);
 
-	if (!roster || !roster.attributes) return;
+	if (!roster) return;
 
 	return {roster: roster.attributes.stats, participant: participant.attributes.stats};
 }
