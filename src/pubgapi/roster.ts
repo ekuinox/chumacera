@@ -5,12 +5,12 @@ namespace PUBGAPI {
 		readonly type: string = "roster";
 		readonly id: string;
 		readonly attributes?: {
-			shardId: string;
+			shard_id: string;
 			stats: any;
 			won: boolean;
 		};
 		readonly relationships?: {
-			participants: Participant[];
+			participants: {type: string, id: string}[];
 			team: any
 		};
 		
@@ -19,7 +19,7 @@ namespace PUBGAPI {
 			this.id = data.id;
 			if (data.attributes) {
 				this.attributes = {
-					shardId: data.attributes.shardId,
+					shard_id: data.attributes.shardId,
 					stats: data.attributes.stats,
 					won: data.attributes.won === "true" ? true : false
 				};
@@ -27,10 +27,10 @@ namespace PUBGAPI {
 			if (data.relationships) {
 				this.relationships = {
 					participants: (() => {
-						const participants: Participant[] = [];
+						const participants: {type: string, id: string}[] = [];
 						if (data.relationships.participants.data) {
-							data.relationships.participants.data.forEach((p: any) => {
-								participants.push(new Participant(p));
+							data.relationships.participants.data.forEach((participant: {type: string, id: string}) => {
+								if (participant.type === "participant") participants.push(participant);
 							});
 						}
 						return participants;
