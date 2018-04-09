@@ -98,7 +98,6 @@ namespace PUBGAPI {
 			["filtered", "global"].forEach(key => {
 				if (data[key]) {
 					for(const event_name in data[key]) {
-						console.log(event_name);
 						data[key][event_name].forEach((event: any) => {
 							this.push(event, event_name);
 						});
