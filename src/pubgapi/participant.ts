@@ -60,9 +60,9 @@ namespace PUBGAPI {
     export class Participant {
         readonly type: string = "participant";
         readonly id: string;
-        readonly attributes?: {
+        readonly attributes: {
             actor: string; // 基本的に空っぽい
-            shardId: string;
+            shard_id: string;
             stats: ParticipantStats;
         };
         constructor(data: any) {
@@ -71,8 +71,14 @@ namespace PUBGAPI {
             if (data.attributes) {
                 this.attributes = { 
                     actor: data.attributes.actor,
-                    shardId: data.attributes.shardId,
+                    shard_id: data.attributes.shardId,
                     stats: new ParticipantStats(data.attributes.stats)
+                };
+            } else {
+                this.attributes = { 
+                    actor: "",
+                    shard_id: "",
+                    stats: new ParticipantStats({})
                 };
             }
             

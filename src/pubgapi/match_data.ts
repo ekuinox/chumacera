@@ -17,7 +17,7 @@ namespace PUBGAPI {
 		};
 		readonly relationships: {
 			assets: {type: string, id: string}[];
-			rosters: Roster[];
+			rosters: {type: string, id: string}[];
 			rounds: any[];
 			spectators: any[];
 		};
@@ -48,19 +48,18 @@ namespace PUBGAPI {
 			this.relationships = { assets: [], rosters: [], rounds: [], spectators: [] };
 			// assets
 			if (data.relationships.assets && data.relationships.assets.data) {
-				data.relationships.assets.data.forEach((asset: any) => {
+				data.relationships.assets.data.forEach((asset: {type: string, id: string}) => {
 					if (asset.type === "asset") {
-						this.relationships.assets.push({
-							type: asset.type,
-							id: asset.id
-						});
+						this.relationships.assets.push(asset);
 					}
 				});
 			}
 			// rosters
 			if (data.relationships.rosters && data.relationships.rosters.data) {
-				data.relationships.rosters.data.forEach((roster: any) => {
-					this.relationships.rosters.push(new Roster(roster));
+				data.relationships.rosters.data.forEach((roster: {type: string, id: string}) => {
+					if (roster.type === "roster") {
+						this.relationships.rosters.push(roster);
+					}
 				});
 			}
 			// rounds
