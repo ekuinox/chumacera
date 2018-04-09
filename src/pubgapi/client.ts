@@ -28,9 +28,9 @@ namespace PUBGAPI {
 		}
 
 		// Playerを1件引っ張ってくる
-		public getPlayer(id: string, region: string): Promise<PlayerData>;
-		public getPlayer(id: string, region: string, raw: boolean): Promise<any>
-		public getPlayer(id: string, region: string, raw?: boolean) {
+		public getPlayer(region: string | Shard, id: string) : Promise<PlayerData>;
+		public getPlayer(region: string | Shard, id: string,  raw: boolean): Promise<any>
+		public getPlayer(region: string | Shard, id: string,  raw?: boolean) {
 			return new Promise<PlayerData>((resolve, reject) => {
 				this.get(`${this.base_url}/shards/${region}/players/${id}`)
 				.then(result => {
@@ -45,9 +45,9 @@ namespace PUBGAPI {
 		}
 
 		// フィルタによってPlayerを複数件引っ張ってくる
-		public getPlayers(region: string, filter: {names?: string[], ids?: string[]}): Promise<PlayerData[]>;
-		public getPlayers(region: string, filter: {names?: string[], ids?: string[]}, raw: boolean): Promise<any>;
-		public getPlayers(region: string, filter: {names?: string[], ids?: string[]}, raw?: boolean) {
+		public getPlayers(region: string | Shard, filter: {names?: string[], ids?: string[]}): Promise<PlayerData[]>;
+		public getPlayers(region: string | Shard, filter: {names?: string[], ids?: string[]}, raw: boolean): Promise<any>;
+		public getPlayers(region: string | Shard, filter: {names?: string[], ids?: string[]}, raw?: boolean) {
 			return new Promise<PlayerData[]>((resolve, reject) => {
 				const params: {[key: string]: string} = {};
 				if (filter.names) params["filter[playerNames]"] = filter.names.join(",");
@@ -75,9 +75,9 @@ namespace PUBGAPI {
 		}
 
 		// マッチを1件引っ張ってくる
-		public getMatch(region: string, id: string): Promise<MatchData>;
-		public getMatch(region: string,id: string, raw: boolean): Promise<any>
-		public getMatch(region: string, id: string, raw?: boolean) {
+		public getMatch(region: string | Shard, id: string): Promise<MatchData>;
+		public getMatch(region: string | Shard, id: string, raw: boolean): Promise<any>
+		public getMatch(region: string | Shard, id: string, raw?: boolean) {
 			return new Promise<MatchData>((resolve, reject) => {
 				this.get(`${this.base_url}/shards/${region}/matches/${id}`)
 				.then(result => {
@@ -107,6 +107,24 @@ namespace PUBGAPI {
 				}).catch(error => reject(error));
 			});
 		}
+	}
+	
+	// referenced from http://www.pubgwiki.org/API_Shards
+	export enum Shard {
+		PC_NA = "pc-na",
+		PC_EU = "pc-eu",
+		PC_KRJP = "pc-krjp", // おそらくもうない
+		PC_KR = "pc-kr",
+		PC_JP = "pc-jp",
+		PC_AS = "pc-as",
+		PC_OC = "pc-oc",
+		PC_SA = "pc-sa",
+		PC_SEA = "pc-sea",
+		PC_KAKAO = "pc-kakao",
+		XBOX_NA = "xbox-na",
+		XBOX_EU = "xbox-eu",
+		XBOX_AS = "xbox-as",
+		XBOX_OC = "xbox-oc"
 	}
 }
 
