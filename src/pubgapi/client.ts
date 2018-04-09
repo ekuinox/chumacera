@@ -92,7 +92,10 @@ namespace PUBGAPI {
 		}
 
 		// Telemetry from url
-		public getTelemetry(url: string) {
+		public getTelemetry(url: string, username?: string) {
+			if (username) {
+				url = url.replace("telemetry-cdn.playbattlegrounds.com", "api.pubg.report").replace(".json", `/${username}`);
+			}
 			return new Promise<TelemetryData>((resolve, reject) => {
 				this.get(url)
 				.then(result => {

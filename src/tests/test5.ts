@@ -9,7 +9,7 @@ const telemetry_url_filtered = "https://api.pubg.report/bluehole-pubg/pc-as/2018
 const telemetry_url = "https://telemetry-cdn.playbattlegrounds.com/bluehole-pubg/pc-as/2018/04/05/18/50/2fdff74e-3902-11e8-8f50-0a586466e49f-telemetry.json";
 
 (async () => {
-    client.getTelemetry(telemetry_url)
+    client.getTelemetry(telemetry_url, "lm0x")
     .then(res => {
         console.log(res.events);
     })

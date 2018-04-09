@@ -23,10 +23,10 @@ namespace PUBGAPI {
             };
         }
 
-        public getTelemetry() {
+        public getTelemetry(username?: string) {
             return new Promise<TelemetryData>((resolve, reject) => {
                 axios.get(
-                    this.attributes.URL,
+                    username ? this.attributes.URL.replace("telemetry-cdn.playbattlegrounds.com", "api.pubg.report").replace(".json", `/${username}`) : this.attributes.URL,
                     {
 						headers: {
 							"Accept": "application/vnd.api+json"
