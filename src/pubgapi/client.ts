@@ -36,7 +36,7 @@ namespace PUBGAPI {
 				.then(result => {
 					try {
 						if (raw) resolve(result);
-						else resolve(new PlayerData(result.data));
+						else resolve(new PlayerData(this, result.data));
 					} catch (e) {
 						reject(e);
 					}
@@ -60,7 +60,7 @@ namespace PUBGAPI {
 						const players:PlayerData[] = [];
 						result.data.forEach((player: any) => {
 							try {
-								players.push(new PlayerData(player));
+								players.push(new PlayerData(this, player));
 							} catch (e) {
 								reject(e);
 							}
@@ -83,7 +83,7 @@ namespace PUBGAPI {
 				.then(result => {
 					try {
 						if (raw) resolve(result);
-						else resolve(new MatchData(result.data, result.included));
+						else resolve(new MatchData(this, result.data, result.included));
 					} catch (e) {
 						reject(e);
 					}

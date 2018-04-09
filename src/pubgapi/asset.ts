@@ -1,8 +1,9 @@
 import axios from "axios";
-import { TelemetryData } from "./telemetry_data";
+import { TelemetryData, Client } from "../app";
 
 namespace PUBGAPI {
     export class Asset {
+        private client: Client;
         readonly type: string = "asset";
         readonly id: string;
         readonly attributes: {
@@ -12,7 +13,8 @@ namespace PUBGAPI {
             name: string;
         };
         
-        constructor(data: any) {
+        constructor(client: Client, data: any) {
+            this.client = client;
             if (data.type !== this.type) throw new Error("Data isn't Asset's");
             this.id = data.id;
             this.attributes = {
@@ -24,18 +26,7 @@ namespace PUBGAPI {
         }
 
         public getTelemetry(username?: string) {
-            return new Promise<TelemetryData>((resolve, reject) => {
-                axios.get(
-                    username ? this.attributes.URL.replace("telemetry-cdn.playbattlegrounds.com", "api.pubg.report").replace(".json", `/${username}`) : this.attributes.URL,
-                    {
-						headers: {
-							"Accept": "application/vnd.api+json"
-						}
-					},
-                ).then(res => {
-                    resolve(new TelemetryData(res.data));
-                }).catch(e => reject(e));
-            });
+            return this.client.getTelemetry(this.attributes.URL, username);
         }
     }
 }
