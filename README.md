@@ -9,9 +9,28 @@ $ npm install chumacera
 ```
 
 ## Usage
+
+### Set a client
+
 ```js
 const Chumacera = require("chumacera");
 const client = new Chumacera.Client("<APIKEY>");
-client.getPlayers("pc-jp", { names : "<Name>"})
+```
+
+### Get players
+```js
+client.getPlayers(Chumacera.Shard.PC_JP, { names : ["<Name>"]})
 .then(players => console.log(players));
+```
+
+### Get match
+```js
+players[0].relationships.matches[0].getMatch()
+.then(match => console.log(match));
+```
+
+### Get telemetry
+```js
+match.getTelemetry()
+.then(telemetry => console.log(telemetry));
 ```
